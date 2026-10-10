@@ -35,9 +35,9 @@ export default function DecryptedText({
   const [revealedIndices, setRevealedIndices] = useState<Set<number>>(new Set())
   const [hasAnimated, setHasAnimated] = useState(false)
   const containerRef = useRef<HTMLSpanElement>(null)
-  const intervalDelay = sequential && duration !== undefined
-    ? duration / Math.max(text.length, 1)
-    : speed
+  const iterationLimit = duration === undefined
+    ? maxIterations
+    : Math.ceil(duration / speed)
 
   const availableChars = useMemo(() => characters.split(''), [characters])
   const shuffleText = useCallback(
@@ -82,16 +82,16 @@ export default function DecryptedText({
         }
         setDisplayText(shuffleText(previous))
         iteration += 1
-        if (iteration >= maxIterations) {
+        if (iteration >= iterationLimit) {
           window.clearInterval(timer)
           setDisplayText(text)
           setIsAnimating(false)
         }
         return previous
       })
-    }, intervalDelay)
+    }, speed)
     return () => window.clearInterval(timer)
-  }, [intervalDelay, isAnimating, maxIterations, nextIndex, sequential, shuffleText, text])
+  }, [isAnimating, iterationLimit, nextIndex, sequential, shuffleText, speed, text])
 
   useEffect(() => {
     if (animateOn !== 'view') return
