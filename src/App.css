@@ -1,0 +1,104 @@
+main {
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  padding: 2rem;
+}
+
+.decoder {
+  display: grid;
+  width: min(100%, 68rem);
+  gap: 2.5rem;
+  text-align: center;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: -0.08em;
+}
+
+.decrypted-text,
+.encrypted-text {
+  font-size: clamp(3rem, 12vw, 10rem);
+  font-weight: 700;
+  letter-spacing: -0.08em;
+}
+
+.decrypted-text {
+  color: #f4f4f5;
+}
+
+.encrypted-text {
+  color: #5eead4;
+}
+
+.decoder-form {
+  display: flex;
+  gap: 0.75rem;
+  width: min(100%, 34rem);
+  margin: 0 auto;
+}
+
+.decoder-form input,
+.decoder-form button {
+  border: 1px solid #3f3f46;
+  border-radius: 0.5rem;
+  font: inherit;
+}
+
+.decoder-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.8rem 1rem;
+  color: #f4f4f5;
+  background: #18181b;
+}
+
+.decoder-form input:focus {
+  outline: 2px solid #5eead4;
+  outline-offset: 2px;
+}
+
+.decoder-form button {
+  padding: 0.8rem 1.1rem;
+  color: #09090b;
+  background: #5eead4;
+  border-color: #5eead4;
+  cursor: pointer;
+}
+
+.decoder-form button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.clear-button {
+  justify-self: center;
+  padding: 0.8rem 1.1rem;
+  font: inherit;
+  color: #f4f4f5;
+  background: transparent;
+  border-color: #52525b;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+@media (max-width: 520px) {
+  .decoder-form {
+    flex-direction: column;
+  }
+
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
