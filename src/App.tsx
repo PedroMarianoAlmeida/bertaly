@@ -57,7 +57,7 @@ function App() {
           text={decodedText}
           animateOn="view"
           sequential
-          speed={75}
+          duration={5000}
           className="decrypted-text"
           encryptedClassName="encrypted-text"
         />

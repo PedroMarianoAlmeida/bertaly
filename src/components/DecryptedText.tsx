@@ -5,6 +5,7 @@ import type { HTMLMotionProps } from 'motion/react'
 type DecryptedTextProps = HTMLMotionProps<'span'> & {
   text: string
   speed?: number
+  duration?: number
   maxIterations?: number
   sequential?: boolean
   revealDirection?: 'start' | 'end' | 'center'
@@ -18,6 +19,7 @@ type DecryptedTextProps = HTMLMotionProps<'span'> & {
 export default function DecryptedText({
   text,
   speed = 50,
+  duration,
   maxIterations = 10,
   sequential = false,
   revealDirection = 'start',
@@ -33,6 +35,9 @@ export default function DecryptedText({
   const [revealedIndices, setRevealedIndices] = useState<Set<number>>(new Set())
   const [hasAnimated, setHasAnimated] = useState(false)
   const containerRef = useRef<HTMLSpanElement>(null)
+  const intervalDelay = sequential && duration !== undefined
+    ? duration / Math.max(text.length, 1)
+    : speed
 
   const availableChars = useMemo(() => characters.split(''), [characters])
   const shuffleText = useCallback(
@@ -84,9 +89,9 @@ export default function DecryptedText({
         }
         return previous
       })
-    }, speed)
+    }, intervalDelay)
     return () => window.clearInterval(timer)
-  }, [isAnimating, maxIterations, nextIndex, sequential, shuffleText, speed, text])
+  }, [intervalDelay, isAnimating, maxIterations, nextIndex, sequential, shuffleText, text])
 
   useEffect(() => {
     if (animateOn !== 'view') return
